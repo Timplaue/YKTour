@@ -6,6 +6,7 @@ import CityScreen from './components/CityScreen';
 import CityCards from './components/CityCards';
 import NavMenu from './components/NavMenu';
 import Profile from './components/Profile';
+import CityMap from './components/CityMap'; // Импортируем компонент CityMap
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -75,6 +76,10 @@ function App() {
 
         {isAuthenticated && currentScreen === 'profile' && (
             <Profile onLogout={handleLogout} />
+        )}
+
+        {isAuthenticated && currentScreen === 'map' && (
+            <CityMap />
         )}
       </div>
   );

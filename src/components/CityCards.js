@@ -33,7 +33,7 @@ const CityCards = ({ onSelectCity }) => {
                         />
                         <div className="city-content">
                             <h3>{city.name}</h3>
-                            <button>Записаться на тур</button>
+                            <button>Подробнее</button>
                         </div>
                     </div>
                 ))}
