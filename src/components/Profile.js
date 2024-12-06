@@ -12,19 +12,31 @@ const Profile = ({ onLogout }) => {
     const fetchProfile = async () => {
         const token = localStorage.getItem('token');
 
+        if (!token) {
+            console.log("Токен отсутствует");
+            setError("Токен отсутствует");
+            return;
+        }
+
         try {
+            console.log("Отправка запроса с токеном:", token); // Логируем токен
             const response = await axios.get('http://localhost:5000/api/auth/profile', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            console.log('Данные профиля получены:', response.data); // Лог для получения данных
+
             setProfileData(response.data);
-            setTours(response.data.tours);  // Устанавливаем записанные туры
+            setTours(response.data.tours || []);  // Устанавливаем записанные туры, если они есть
+
+            console.log('Записанные туры:', response.data.tours);  // Лог туров для отладки
+
         } catch (error) {
+            console.error("Ошибка при получении профиля:", error);
             if (error.response && error.response.status === 401) {
-                onLogout();
+                setError("Ошибка аутентификации. Пожалуйста, войдите снова.");
             } else {
-                console.error("Ошибка при получении профиля:", error);
                 setError("Ошибка при получении профиля");
             }
         }
@@ -34,6 +46,7 @@ const Profile = ({ onLogout }) => {
         fetchProfile();
     }, []);
 
+    // Обработка изменения аватарки
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -47,10 +60,9 @@ const Profile = ({ onLogout }) => {
                 }
             })
                 .then((response) => {
-                    // Добавляем временную метку для сброса кэша
                     setProfileData(prevState => ({
                         ...prevState,
-                        avatarUrl: `${response.data.avatarUrl}?t=${new Date().getTime()}`
+                        avatarUrl: `${response.data.avatarUrl}?t=${new Date().getTime()}` // Принудительная перезагрузка аватарки
                     }));
                     alert('Аватарка обновлена');
                 })
@@ -61,42 +73,59 @@ const Profile = ({ onLogout }) => {
         }
     };
 
+    // Проверяем, что профиль загружен, иначе показываем загрузку или ошибку
+    if (error) {
+        return <div className="error-message">{error}</div>;
+    }
+
+    if (!profileData) {
+        return <div>Загрузка...</div>; // Пока данные не загружены, показываем сообщение о загрузке
+    }
+
+    // Логируем туры для отладки
+    console.log('Записанные туры в профиле:', tours);
+
     return (
         <div className="block3">
-            {error && <p>{error}</p>}
-            {profileData && (
-                <div className="profile">
-                    <h3>• Мой аккаунт</h3>
-                    <div className="profile-container">
-                        <img
-                            src={profileData.avatarUrl ? `http://localhost:5000${profileData.avatarUrl}` : '/default-avatar.png'}
-                            alt="Аватар"
-                            className="avatar"
-                        />
-                        <input
-                            type="file"
-                            onChange={handleAvatarChange}
-                            className="avatar-input"
-                        />
-                        <div className="profile-info">
-                            <h2>{profileData.firstName} {profileData.lastName}</h2>
-                            <p>Дата регистрации: {new Date(profileData.registrationDate).toLocaleDateString()}</p>
-                        </div>
+            <div className="profile">
+                <h3>• Мой аккаунт</h3>
+                <div className="profile-container">
+                    <img
+                        src={profileData.avatarUrl ? `http://localhost:5000${profileData.avatarUrl}` : '/default-avatar.png'}
+                        alt="Аватар"
+                        className="avatar"
+                    />
+                    <input
+                        type="file"
+                        onChange={handleAvatarChange}
+                        className="avatar-input"
+                    />
+                    <div className="profile-info">
+                        <h2>{profileData.firstName} {profileData.lastName}</h2>
+                        <p>Дата регистрации: {new Date(profileData.registrationDate).toLocaleDateString()}</p>
                     </div>
-                    <h5>Логин: {profileData.username}</h5>
-                    <h5>Записанные туры:</h5>
-                    <ul>
-                        {tours.length > 0 ? (
-                            tours.map((tour, index) => (
-                                <li key={index}>{tour.name}</li>
-                            ))
-                        ) : (
-                            <p>Вы не записаны на туры.</p>
-                        )}
-                    </ul>
-                    <button className="logout" onClick={onLogout}>Выйти</button>
                 </div>
-            )}
+                <h5>Логин: {profileData.username}</h5>
+
+                {/* Условие отображения записанных туров */}
+                <h5>Записанные туры:</h5>
+                {tours.length > 0 ? (
+                    <ul>
+                        {tours.map((tour, index) => (
+                            <li key={index}>
+                                <strong>{tour.name}</strong>
+                                <p>{tour.description}</p>
+                                <p>Дата: {new Date(tour.date).toLocaleDateString()}</p>
+                                <p>Время: {tour.time}</p>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>Вы не записаны на туры.</p>
+                )}
+
+                <button className="logout" onClick={onLogout}>Выйти</button>
+            </div>
         </div>
     );
 };

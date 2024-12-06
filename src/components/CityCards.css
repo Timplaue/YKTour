@@ -1,11 +1,11 @@
 .city-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Минимум 250px, карточки адаптивно растягиваются */
-    gap: 20px; /* Расстояние между карточками */
+    grid-template-columns: repeat(3, 0fr); /* 3 колонки по умолчанию (для десктопа) */
+    gap: 30px; /* Расстояние между карточками */
     justify-content: center; /* Центрируем карточки */
     padding: 20px; /* Внутренние отступы */
-    max-width: 50%; /* Ограничиваем ширину контейнера */
-    margin: 0 auto; /* Выравниваем контейнер по центру */
+    max-width: 50%; /* Максимальная ширина контейнера (например, 1200px) */
+    margin: 0 auto; /* Центрируем контейнер по горизонтали */
 }
 
 .city-card {
@@ -14,12 +14,13 @@
     border: 1px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    height: 100%;
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    aspect-ratio: 1; /* Сохраняем пропорции 1:1 (квадрат) */
+    max-width: 100%; /* Ограничиваем ширину карточки */
 }
 
 .city-card:hover {
@@ -29,8 +30,8 @@
 
 .city-image {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
+    height: 60%;
+    object-fit: cover; /* Обрезка изображения, чтобы оно заполнило контейнер */
     margin-top: 0;
     border-bottom: 1px solid #ddd;
 }
@@ -65,8 +66,30 @@
 .city-card button:hover {
     background-color: #5cb85c;
 }
+
 .logos {
     height: 80%;
     width: 10vh;
     margin: 2% 0 0 5%;
+}
+
+/* Мобильные устройства - 1 колонка */
+@media (max-width: 480px) {
+    .city-cards {
+        grid-template-columns: 1fr; /* 1 колонка */
+    }
+}
+
+/* Позиционирование для небольших устройств - 2 колонки */
+@media (max-width: 768px) {
+    .city-cards {
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+    }
+}
+
+/* Для устройств более 768px (обычно десктопы) */
+@media (min-width: 769px) {
+    .city-cards {
+        grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    }
 }

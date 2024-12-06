@@ -43,7 +43,7 @@ h1, h2 {
 }
 
 .select-date-btn {
-    background-color: #3498db;
+    background-color: #FF9B53;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -53,7 +53,7 @@ h1, h2 {
 }
 
 .select-date-btn:hover {
-    background-color: #2980b9;
+    background-color: #FF9B53;
 }
 
 .back-btn {
@@ -112,7 +112,7 @@ h1, h2 {
 .modal-actions button {
     padding: 10px 20px;
     margin: 5px;
-    background-color: #3498db;
+    background-color: #FF9B53;
     color: white;
     border: none;
     border-radius: 5px;
@@ -120,7 +120,7 @@ h1, h2 {
 }
 
 .modal-actions button:hover {
-    background-color: #2980b9;
+    background-color: #FF9B53;
 }
 
 /* Стили для выбора даты и времени */

@@ -14,6 +14,9 @@ input.registration {
     border-radius: 8px;
     background-color: transparent;
 }
+input.registration:hover {
+    border: 2px solid #FF9B53;
+}
 .left{
     margin-left: 5%;
     margin-right: 15%;
@@ -39,4 +42,7 @@ button.registration {
 }
 h1.registration {
     font-family: 'Jura', Arial, sans-serif;
+}
+.toggle-button:hover {
+    color: #FF9B53;
 }
