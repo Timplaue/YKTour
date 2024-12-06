@@ -3,14 +3,14 @@ import './NavMenu.css';
 import Profile from '../assets/NavIcon/Layer_1.svg';
 import Map from '../assets/NavIcon/Layer_1-1.svg';
 import Like from '../assets/NavIcon/Layer_1-2.svg';
-import Comment from '../assets/NavIcon/Layer_1-3.svg';
+import Home from '../assets/NavIcon/home.svg';
 
 function NavMenu({ onNavigate }) {
     return (
         <div className="nav-menu">
             {/* Кнопка для перехода на главную страницу */}
             <button onClick={() => onNavigate('home')} className="icon-button">
-                <img src={Comment} alt="Home Icon" className="home-image" />
+                <img src={Home} alt="Home Icon" className="home-image" />
             </button>
 
             {/* Кнопка для перехода на карту */}
