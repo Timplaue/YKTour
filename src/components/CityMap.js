@@ -53,8 +53,7 @@ const CityMap = () => {
 
     return (
         <div className="city-map">
-            <h2>Карта города</h2>
-            <div id="map" className="map-container" style={{ width: '100%', height: '400px' }}></div>
+            <div id="map" className="map-container" style={{ width: '100%', height: '100vh' }}></div>
         </div>
     );
 };

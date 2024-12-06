@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'; // Импортируем useEffect
 import axios from 'axios';
 import './CityScreen.css'; // Подключим стили для компонента
+import logo from '../assets/logo.svg';
 
 const TourBookingModal = ({ tour, availableDates, availableTimes, onClose, onBook }) => {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -112,10 +113,12 @@ const CityScreen = ({ city, goBack }) => {
     }, [city]);
 
     return (
-        <div className="city-screen">
-            <div className="header">
-                <h1>{city.name}</h1>
-                <img src={`http://localhost:5000${city.image}`} alt={city.name} className="city-image" />
+        <div>
+            <img src={logo} alt="Logo" className="logos"/>
+        <div className="login-container">
+        <div className="header">
+            <h1>{city.name}</h1>
+                <img src={`http://localhost:5000${city.image}`} alt={city.name} className="city-image1" />
             </div>
             <p className="city-description">{city.description}</p>
 
@@ -153,6 +156,7 @@ const CityScreen = ({ city, goBack }) => {
                     onBook={handleBookTour}
                 />
             )}
+        </div>
         </div>
     );
 };
