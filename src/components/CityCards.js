@@ -21,7 +21,7 @@ const CityCards = ({ onSelectCity }) => {
     }, []);
 
     return (
-        <div>
+        <div className="info">
             <img src={logo} alt="Logo" className="logos"/>
             <div className="city-cards">
                 {cities.map((city) => (

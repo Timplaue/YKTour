@@ -131,7 +131,7 @@ const CityScreen = ({ city, goBack }) => {
     }, [city]);
 
     return (
-        <div>
+        <div className="info1">
             <img src={logo} alt="Logo" className="logos" />
             <div className="login-container">
                 <div className="header">
